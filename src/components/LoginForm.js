@@ -22,7 +22,7 @@ class LoginForm extends Component {
         return (
             <View style={styles.body}>
                 <TextInput
-                    placeholder='example@gmail.com'
+                    placeholder='Enter your email address'
                     keyboardType='email-address'
                     value={this.state.email}
                     onChangeText={(text) => this.setState({ email: text })}
@@ -31,7 +31,7 @@ class LoginForm extends Component {
                 </TextInput>
 
                 <TextInput
-                    placeholder='Ingresa tu contraseña ...'
+                    placeholder='Enter your password'
                     keyboardType='default'
                     value={this.state.password}
                     onChangeText={(text) => this.setState({ password: text })}
@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 16,
         margin: 16,
-       
     },
     input: {
         color: 'rgb(0,0,0)',
@@ -63,7 +62,8 @@ const styles = StyleSheet.create({
         borderColor: 'rgb(0,0,0)',
         backgroundColor: 'rgb(255,255,255)',
         padding: 10,
-        margin: 10
+        margin: 10, 
+        marginTop: 15
     },
     boton: {
         borderStyle: 'solid',
