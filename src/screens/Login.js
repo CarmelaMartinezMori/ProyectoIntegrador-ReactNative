@@ -20,7 +20,6 @@ class Login extends Component {
   }
 }
 const styles = StyleSheet.create({
-
   boton: {
     borderStyle: 'solid',
     borderWidth: 1,
