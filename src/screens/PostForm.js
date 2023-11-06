@@ -1,13 +1,13 @@
 import react, { Component } from "react";
-import {TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList} from "react-native";
+import { TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList } from "react-native";
 import { auth, db } from "../firebase/config";
-
 
 class PostForm extends Component {
   constructor() {
     super();
     this.state = { post: ""};
   }
+
 
   postear(){
     db.collection("posts").add({
