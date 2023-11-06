@@ -111,8 +111,6 @@ class RegisterForm extends Component {
 
                 }
 
-
-
             </View>
         )
     }

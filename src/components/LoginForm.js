@@ -14,7 +14,7 @@ class LoginForm extends Component {
 
     login(email, password) {
         auth.signInWithEmailAndPassword(email, password)
-            .then(resp => this.props.navigation.navigate('Home'))
+            .then(resp => this.props.navigation.navigate('Menu'))
             .catch(err => console.log(err))
     }
 

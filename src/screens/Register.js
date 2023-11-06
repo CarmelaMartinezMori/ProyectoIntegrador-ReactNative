@@ -1,16 +1,12 @@
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { Component } from 'react'
-import { auth } from '../firebase/config'
 import RegisterForm from '../components/RegisterForm'
-
 
 class Register extends Component {
   constructor(props) {
     super(props)
   }
-
   
-
   render() {
     return (
       <View style={styles.camara}>

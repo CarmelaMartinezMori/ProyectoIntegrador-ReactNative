@@ -1,6 +1,7 @@
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { Component } from 'react'
-import LoginForm from '../components/LoginForm'
+import LoginForm from '../components/loginForm'
+
 
 class Login extends Component {
 
