@@ -10,10 +10,10 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import PostForm from "../screens/PostForm";
 import User from "../screens/User";
 import Home from "../screens/Home";
 import UserSearch from "../screens/UserSearch";
+import NewPost from "../screens/NewPost";
 
 const Tab = createBottomTabNavigator();
 
@@ -36,7 +36,7 @@ class Menu extends Component {
         />
         <Tab.Screen
           name="Add Post"
-          component={PostForm}
+          component={NewPost}
           options={{
             headerShown: false,
             tabBarIcon: () => <AntDesign name="pluscircleo" size={24} />,

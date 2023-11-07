@@ -78,7 +78,7 @@ export default class Post extends Component {
           <Text style={styles.textUser}>{this.props.data.data.owner}</Text>
         </TouchableOpacity>
         <Image
-          source={{ uri: this.props.data.data.foto }}
+          source={{ uri: this.props.data.data.photo }}
           style={styles.img}
         />
         <View style={styles.infoContainer}>
@@ -105,8 +105,8 @@ export default class Post extends Component {
           </TouchableOpacity>
         </View>
         {auth.currentUser.email === this.props.data.data.owner ? (
-          <TouchableOpacity onPress={() => this.deletePost()}>
-            <Text style={styles.deletePost}>
+          <TouchableOpacity onPress={() => this.deletePost()} style={styles.deletePost}>
+            <Text style={styles.deletePostText}>
               <FontAwesome name="trash" size={17} color="tomato" /> Delete Post
             </Text>
           </TouchableOpacity>

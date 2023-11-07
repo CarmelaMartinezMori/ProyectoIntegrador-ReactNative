@@ -1,66 +1,46 @@
-import react, { Component } from "react";
-import { TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList } from "react-native";
-import Post from "../components/Post"
-import { auth, db } from "../firebase/config";
+import React, { Component } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import Posteos from '../components/Posts';
+import { db } from '../firebase/config';
 
-class Home extends Component {
-  constructor() {
-    super();
-    this.state = {listaPost: []};
+export default class Feed extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts: [],
+    };
   }
 
-  componentDidMount(){
-    //Traer datos
-    db.collection('posts').onSnapshot(
-        posteos => {
-            let postsAMostrar = [];
+  componentDidMount() {
+    db.collection('posts')
+      .orderBy('createdAt', 'desc')
+      .onSnapshot((docs) => {
+        let arrDocs = [];
 
-            posteos.forEach( unPost => {
-                postsAMostrar.push(
-                    {
-                        id: unPost.id,
-                        datos: unPost.data()
-                    }
-                )
-            })
+        docs.forEach((doc) =>
+          arrDocs.push({
+            id: doc.id,
+            data: doc.data(),
+          })
+        );
 
-            this.setState({
-                listaPost: postsAMostrar
-            })
-        }
-    )
-}
-
+        this.setState({
+          posts: arrDocs,
+        });
+      });
+  }
 
   render() {
-    console.log(this.state.listaPost);
     return (
       <View style={styles.container}>
-        <Text>HOME</Text>
-
-        <Text>Lista de Posteos</Text>
-                {
-                    this.state.listaPost.length === 0 
-                    ?
-                    <Text>Cargando...</Text>
-                    :
-                    <FlatList 
-                        data= {this.state.listaPost}
-                        keyExtractor={ unPost => unPost.id }
-                        renderItem={ ({item}) => <Post infoPost = { item } /> }
-                    />
-                }
-
+        <Posteos data={this.state.posts} navigation={this.props.navigation} />
       </View>
     );
   }
 }
 
-
 const styles = StyleSheet.create({
   container: {
-    height: '100vh',
+    flex: 1,
   },
 });
-
-export default Home;
