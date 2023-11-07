@@ -1,11 +1,22 @@
 import react, { Component } from "react";
-import { TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList } from "react-native";
+import {
+  TextInput,
+  TouchableOpacity,
+  View,
+  Text,
+  StyleSheet,
+  FlatList 
+} from "react-native";
+import MyCamera from "../components/MyCamera";
+
 import { auth, db } from "../firebase/config";
+
+
 
 class PostForm extends Component {
   constructor() {
     super();
-    this.state = { post: ""};
+    this.state = { post: "", showCamera: true, url: ''};
   }
 
 
@@ -13,6 +24,7 @@ class PostForm extends Component {
     db.collection("posts").add({
         owner: auth.currentUser.email,
         post: this.state.post,
+        photo: this.state.url,
         likes: [],
         createdAt: Date.now()
     })
@@ -20,11 +32,19 @@ class PostForm extends Component {
     .catch(error => console.log(`El error fue: ${error}`))
   }
 
+  onImageUpload(url){
+    this.setState({ url: url , showCamera: false});
+  }
+
   render() {
-    console.log(this.state.users);
     return (
       <View>
         <Text>PostForm</Text>
+
+        {this.state.showCamera ? <MyCamera onImageUpload={(url) => this.onImageUpload(url)} /> : 
+
+        <>
+
         <TextInput
           style={styles.input}
           onChangeText={(text) => this.setState({ post: text })}
@@ -38,7 +58,7 @@ class PostForm extends Component {
         >
           <Text style={styles.textButton}>Postear</Text>
         </TouchableOpacity>
-        
+        </> }
       </View>
     );
   }

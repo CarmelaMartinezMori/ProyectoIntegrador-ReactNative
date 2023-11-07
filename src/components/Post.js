@@ -1,5 +1,7 @@
 import react, { Component } from 'react';
-import {TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList} from 'react-native';
+import {TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList, Image} from 'react-native';
+import { auth, db } from '../firebase/config';
+import firebase from 'firebase';
 
 
 class Post extends Component {
@@ -7,7 +9,7 @@ class Post extends Component {
         super(props)
         this.state={
             like: false,
-        } 
+        }
     }
 
     componentDidMount(){
@@ -20,17 +22,27 @@ class Post extends Component {
             })
         }
         if(likes.length > 0){
-            likes.forEach( like => console.log(like))
+            likes.forEach( like => {if (like === auth.currentUser.email) {
+                this.setState({ like: true })
+            }})
         }
     }
 
 
    likear(){
     //El post tendría que guardar una propiedad like con un array de los usuario que lo likearon.
+    db.collection("posts").doc(this.props.infoPost.id).update({
+        likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
+    })
+    .then(this.setState({like: true}))
    }
 
    dislike(){
     //Quitar del array de likes al usario que está mirando el post.
+    db.collection("posts").doc(this.props.infoPost.id).update({
+        likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
+    })
+    .then(this.setState({like: false}))
    }
    
 
@@ -42,6 +54,7 @@ class Post extends Component {
                 <Text>Datos del Post</Text>
                 <Text>Email: {this.props.infoPost.datos.owner}</Text>
                 <Text>Texto: {this.props.infoPost.datos.post}</Text>
+                <Image style={styles.camera} source={{uri:this.props.infoPost.datos.photo }}/>
                 <Text>Cantidad de Likes: {this.props.infoPost.datos.likes.length}</Text>
 
                 {/* If ternario */}
@@ -55,7 +68,8 @@ class Post extends Component {
                     <Text style={styles.textButton} >Like</Text>
                 </TouchableOpacity>
                 }
-
+                
+                
             </View>
         )
     }
@@ -63,8 +77,12 @@ class Post extends Component {
 
 const styles = StyleSheet.create({
     formContainer: {
-      paddingHorizontal: 10,
-      marginTop: 20,
+        height: `60vh`,
+        widht: `100vw`,
+    },
+    camera: {
+        widht: '100%',
+        height: '100%',
     },
     input: {
       height: 20,
