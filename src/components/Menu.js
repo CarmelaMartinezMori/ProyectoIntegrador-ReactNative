@@ -25,7 +25,7 @@ class Menu extends Component {
 
   render() {
     return (
-      <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
+      <Tab.Navigator initialRouteName="Home" screenOptions={{ tabBarShowLabel: false }}>
         <Tab.Screen
           name="Home"
           component={Home}

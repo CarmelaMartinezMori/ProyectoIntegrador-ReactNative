@@ -23,7 +23,6 @@ export default class Feed extends Component {
             data: doc.data(),
           })
         );
-
         this.setState({
           posts: arrDocs,
         });
