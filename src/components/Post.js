@@ -69,7 +69,7 @@ export default class Post extends Component {
       <View style={styles.container}>
         <TouchableOpacity
           onPress={() =>
-            this.props.navigation.navigate('UserProfile', {
+            this.props.navigation.navigate('ProfileUsers', {
               email: this.props.data.data.owner,
             })
           }

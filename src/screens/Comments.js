@@ -18,7 +18,7 @@ class Comments extends Component {
       .onSnapshot((doc) => {
         this.setState({
           data: doc.data(),
-          comments: doc.data().comments.sort((a, b) => a.createdAt - b.createdAt).reverse(), // Sort comments in descending order
+          comments: doc.data().comments.sort((a, b) => a.createdAt - b.createdAt).reverse(), 
         });
       });
   }

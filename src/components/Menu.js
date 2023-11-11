@@ -1,13 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import react, { Component } from "react";
-import {
-  TextInput,
-  TouchableOpacity,
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import User from "../screens/User";
@@ -25,7 +17,7 @@ class Menu extends Component {
 
   render() {
     return (
-      <Tab.Navigator initialRouteName="Home" screenOptions={{ tabBarShowLabel: false }}>
+      <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
         <Tab.Screen
           name="Home"
           component={Home}

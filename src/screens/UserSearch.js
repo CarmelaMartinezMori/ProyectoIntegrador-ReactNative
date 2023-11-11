@@ -41,7 +41,7 @@ class UserSearch extends Component {
         <View style={styles.search}>
           <TextInput
             style={styles.input}
-            placeholder="Enter your email"
+            placeholder="Enter your search"
             onChangeText={(text) => this.filterUsers(text)}
           />
         </View>
@@ -51,11 +51,12 @@ class UserSearch extends Component {
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <TouchableOpacity
-              onPress={() =>
-                this.props.navigation.navigate('UserProfile', {
-                  email: item.data.owner,
-                })
-              }
+            onPress={() => {
+              console.log('Navigating to UsersProfile with email:', item.data.owner);
+              this.props.navigation.navigate('UsersProfile', {
+                email: item.data.owner,
+              });
+            }}
             >
               <Text>{item.data.owner}</Text>
             </TouchableOpacity>
