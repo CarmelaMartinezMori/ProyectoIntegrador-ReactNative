@@ -33,47 +33,47 @@ class EditProfile extends Component {
   }
 
   updateProfile(newPassword) {
-    const { id } = this.state.user[0];
-    const { username, bio } = this.state;
-    if (username !== undefined && bio !== undefined && username.trim() !== '' && bio.trim() !== '') {
-      if (!newPassword) {
-        db.collection('users').doc(id).update({
-          username: username,
-          bio: bio,
-        }).then(() => {
-          this.props.navigation.navigate("ProfileData");
-        }).catch((error) => {
-          console.log(error);
-          this.setState({
-            errorOccurred: true,
-          });
+    const { id, bio, username } = this.state.user[0];
+    if (!newPassword) {
+      db.collection('users').doc(id).update({
+        username: username,
+        bio: bio,
+      }).then(() => {
+        this.props.navigation.navigate("ProfileData");
+      }).catch((error) => {
+        console.log(error);
+        this.setState({
+          errorOccurred: true,
         });
-      } else {
-        firebase.auth().currentUser.updatePassword(newPassword)
-          .then(() => {
-            db.collection('users').doc(id).update({
-              username: username,
-              bio: bio,
-            }).then(() => {
-              this.props.navigation.navigate("Login");
-            }).catch((error) => {
-              console.log(error);
-              this.setState({
-                errorOccurred: true,
-              });
-            });
-          })
-          .catch((error) => {
+      });
+    } else {
+      firebase.auth().currentUser.updatePassword(newPassword)
+        .then(() => {
+          db.collection('users').doc(id).update({
+            username: username,
+            bio: bio,
+          }).then(() => {
+            this.props.navigation.navigate("ProfileData");
+          }).catch((error) => {
             console.log(error);
             this.setState({
               errorOccurred: true,
             });
           });
-      }
-    } else {
-      console.log('Username or bio is not provided.');
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error.code === 'auth/requires-recent-login') {
+            alert('This operation requires recent authentication. Please log in again.');
+          } else {
+            this.setState({
+              errorOccurred: true,
+            });
+          }
+        });
     }
   }
+  
   
   
   render() {

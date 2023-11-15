@@ -11,6 +11,7 @@ export default class Post extends Component {
       likeCount: this.props.data.data.likes.length,
       isLiked: false,
       isModalVisible: false, 
+      commentCount: this.props.data.data.comments.length,
     };
   }
 
@@ -65,7 +66,10 @@ export default class Post extends Component {
       return;
     }
     db.collection('posts').doc(id).delete();
-    this.setState({ isModalVisible: false });  
+    this.setState((prevState) => ({
+      isModalVisible: false,
+      commentCount: prevState.commentCount - 1,
+    }));
   }
   
 
@@ -118,8 +122,16 @@ export default class Post extends Component {
               size={24}
               color="rgb(216, 166, 178)"
             />
+            <Text style={styles.textLikeCount}>
+              {this.state.commentCount}
+            </Text>
           </TouchableOpacity>
-          <FlatList
+        </View>
+        <Text style={styles.textDescription}>
+          {this.props.data.data.description}
+        </Text>
+        <FlatList
+            style={styles.comments}
             data={this.props.data.data.comments.slice(0, 4)} // Mostrar solo los últimos 4 comentarios
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
@@ -129,12 +141,11 @@ export default class Post extends Component {
               </View>
             )}
           />
-        </View>
-        <Text style={styles.textDescription}>
-          {this.props.data.data.description}
-        </Text>
         {auth.currentUser.email === this.props.data.data.owner && (
-          <TouchableOpacity onPress={() => this.confirmDeletePost()} style={styles.deletePost}>
+          <TouchableOpacity
+            onPress={() => this.confirmDeletePost()}
+            style={styles.deletePost}
+          >
             <Text style={styles.deletePostText}>
               <FontAwesome name="trash" size={17} color="tomato" /> Delete Post
             </Text>
@@ -214,7 +225,13 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   commentButton: {
-    margin: "auto",
+    flexDirection: "row",
+    alignItems: "center",  
+    marginLeft: "auto",
+  },
+  comments:{
+    flex: 1,
+    flexDirection: "column",
   },
   deletePost: {
     marginTop: 10,
@@ -256,7 +273,9 @@ const styles = StyleSheet.create({
     backgroundColor: "tomato",
   },
   textDescription: {
-    fontSize: 12,
+    fontSize: 14,
     color: "rgb(97, 74, 80)",
+    marginBottom: 10,
+    marginTop: 5
   },
 });
