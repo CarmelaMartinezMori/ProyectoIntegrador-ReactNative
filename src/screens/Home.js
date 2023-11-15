@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Posteos from '../components/Posts';
-import { db } from '../firebase/config';
+import React, { Component } from "react";
+import { View, Text, StyleSheet} from "react-native";
+import Posts from "../components/Posts";
+import { db } from "../firebase/config";
 
 export default class Feed extends Component {
   constructor(props) {
@@ -10,10 +10,10 @@ export default class Feed extends Component {
       posts: [],
     };
   }
-
+  
   componentDidMount() {
-    db.collection('posts')
-      .orderBy('createdAt', 'desc')
+    db.collection("posts")
+      .orderBy("createdAt", "desc")
       .onSnapshot((docs) => {
         let arrDocs = [];
 
@@ -32,7 +32,7 @@ export default class Feed extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Posteos data={this.state.posts} navigation={this.props.navigation} />
+        <Posts data={this.state.posts} navigation={this.props.navigation} />
       </View>
     );
   }

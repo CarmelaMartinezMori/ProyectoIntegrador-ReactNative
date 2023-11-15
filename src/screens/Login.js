@@ -1,26 +1,38 @@
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
-import React, { Component } from 'react'
-import LoginForm from '../components/loginForm'
+// Login.js
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import LoginForm from '../components/LoginForm';
+import Loader from '../components/Loader';  // Importa el componente Loader
 
+const Login = ({ navigation }) => {
+  const [loading, setLoading] = useState(false);  // Nuevo estado para manejar el indicador de carga
 
-class Login extends Component {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Login</Text>
+      {/* Pasa el estado de carga y la función para cambiar el estado como propiedades al componente LoginForm */}
+      <LoginForm navigation={navigation} setLoading={setLoading} />
 
-  render() {
-    return (
-      <View style={styles.input}>
-        <Text style={styles.title}>Login</Text>
-        <LoginForm navigation={this.props.navigation} />
-        <Text style={styles.btnText}> Don´t have an account?
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Register')}>
-            <Text style={styles.boton}> Register Here! </Text>
-          </TouchableOpacity>
-        </Text>
-      </View>
-    )
-  }
-}
+      <Text style={styles.btnText}>
+        Don't have an account?
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+          <Text style={styles.boton}> Register Here! </Text>
+        </TouchableOpacity>
+      </Text>
+
+      {/* Muestra el indicador de carga solo cuando loading es true */}
+      {loading && <Loader />}
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   boton: {
     borderStyle: 'solid',
     borderWidth: 1,
@@ -30,21 +42,21 @@ const styles = StyleSheet.create({
     color: 'black',
     padding: 10,
     textAlign: 'center',
-    borderRadius: 8
+    borderRadius: 8,
   },
   btnText: {
     textAlign: 'center',
     fontWeight: 'bold',
-    color: 'black'
+    color: 'black',
   },
   title: {
     marginTop: 50,
     marginBottom: 15,
-    fontWeight: 600,
+    fontWeight: '600',
     color: 'black',
     fontSize: 32,
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
+});
 
-})
-export default Login
+export default Login;

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, FlatList, StyleSheet } from 'react-native';
+import { Text, View, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { db } from '../firebase/config';
 import Posts from '../components/Posts';
+import { AntDesign } from '@expo/vector-icons';
 
 class UsersProfile extends Component {
   constructor(props) {
@@ -54,6 +55,15 @@ class UsersProfile extends Component {
       <View style={styles.container}>
         {this.state.infoUser !== '' ? (
           <>
+           <TouchableOpacity
+          style={styles.arrow}
+          onPress={() => this.props.navigation.navigate('Home')}
+        >
+          <Text>
+            <AntDesign name="arrowleft" size={24} color="black" />
+            HOME
+          </Text>
+        </TouchableOpacity>
             <Text style={styles.owner}>{this.state.infoUser.data.owner}</Text>
             <Text style={styles.info}>{this.state.infoUser.data.bio}</Text>
             <Posts

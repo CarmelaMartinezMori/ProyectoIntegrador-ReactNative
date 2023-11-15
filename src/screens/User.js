@@ -51,9 +51,16 @@ class Profile extends Component {
   }
 
   render() {
+    console.log(this.state.users.profileImage);
     return (
       <View style={styles.container}>
         <View style={styles.profileCon}>
+          {this.state.users.profileImage && (
+            <Image
+              source={{ uri: this.state.users.profileImage }}
+              style={styles.image}
+            />
+          )}
           <Text style={styles.user}>@{this.state.users?.username}</Text>
           <Text style={styles.bio}> Bio: {this.state.users?.bio}</Text>
           <Text style={styles.bio}>Cantidad de posteos: {this.state.posts.length}</Text>
@@ -72,7 +79,7 @@ class Profile extends Component {
           <FlatList
             data={this.state.posts}
             keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => <Post data={item} />}
+            renderItem={({ item }) => <Post data={item} navigation={this.props.navigation}/>}
           />
         )}
       </View>
@@ -93,6 +100,8 @@ const styles = StyleSheet.create({
   },
   profileCon: {
     backgroundColor: 'rgb(239,219,224)',
+    alignItems: 'center', 
+    paddingVertical: 20, 
   },
   user: {
     textAlign: 'center',
@@ -136,7 +145,8 @@ const styles = StyleSheet.create({
   image: {
     height: 100,
     width: 100,
-    margin: 'auto',
+    borderRadius: 50, 
+    marginBottom: 10, 
   },
 });
 

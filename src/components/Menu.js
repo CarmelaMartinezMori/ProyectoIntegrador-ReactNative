@@ -10,10 +10,6 @@ import NewPost from "../screens/NewPost";
 const Tab = createBottomTabNavigator();
 
 class Menu extends Component {
-  constructor() {
-    super();
-    this.state = {};
-  }
 
   render() {
     return (

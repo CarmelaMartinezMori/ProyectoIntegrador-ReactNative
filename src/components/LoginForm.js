@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { auth } from '../firebase/config';
+import Loader from './Loader'; // Importa el componente Loader
 
 class LoginForm extends Component {
     constructor(props) {
@@ -8,7 +9,8 @@ class LoginForm extends Component {
         this.state = {
             email: '',
             password: '',
-            error: null, 
+            error: null,
+            loading: false, 
         };
     }
 
@@ -21,11 +23,19 @@ class LoginForm extends Component {
     }
 
     login(email, password) {
+        // Establecer el estado de carga a true
+        this.setState({ loading: true });
+
         auth.signInWithEmailAndPassword(email, password)
-            .then(() => this.props.navigation.navigate('Menu'))
+            .then(() => {
+                // Restablecer el estado de carga cuando la autenticación es exitosa
+                this.setState({ loading: false });
+                this.props.navigation.navigate('Menu');
+            })
             .catch((err) => {
                 console.log(err);
-                this.setState({ error: err.message }); 
+                // Restablecer el estado de carga y mostrar el mensaje de error
+                this.setState({ error: err.message, loading: false });
             });
     }
 
@@ -54,12 +64,16 @@ class LoginForm extends Component {
                     <Text style={styles.error}>{this.state.error}</Text>
                 )}
 
-                <TouchableOpacity
-                    style={styles.boton}
-                    onPress={() => this.login(this.state.email, this.state.password)}
-                >
-                    <Text style={styles.btnText}>Login</Text>
-                </TouchableOpacity>
+                {this.state.loading ? (
+                    <Loader />
+                ) : (
+                    <TouchableOpacity
+                        style={styles.boton}
+                        onPress={() => this.login(this.state.email, this.state.password)}
+                    >
+                        <Text style={styles.btnText}>Login</Text>
+                    </TouchableOpacity>
+                )}
             </View>
         );
     }
