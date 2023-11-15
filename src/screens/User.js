@@ -4,7 +4,7 @@ import { auth, db } from '../firebase/config';
 import Post from '../components/Post';
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 
-class Profile extends Component {
+class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,7 +51,6 @@ class Profile extends Component {
   }
 
   render() {
-    console.log(this.state.users.profileImage);
     return (
       <View style={styles.container}>
         <View style={styles.profileCon}>
@@ -63,23 +62,37 @@ class Profile extends Component {
           )}
           <Text style={styles.user}>@{this.state.users?.username}</Text>
           <Text style={styles.bio}> Bio: {this.state.users?.bio}</Text>
-          <Text style={styles.bio}>Cantidad de posteos: {this.state.posts.length}</Text>
+          <Text style={styles.bio}>
+            Number of posts: {this.state.posts.length}
+          </Text>
         </View>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate("EditProfile")}
+        >
+          <Text style={styles.modify}>
+            <FontAwesome name="gear" size={22} style={styles.modbutton} />
+            Edit Profile
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => this.Logout()}>
           <Text style={styles.log}>Logout</Text>
         </TouchableOpacity>
 
-        <Text style={styles.tusPosts}>Tus posts: </Text>
+        <Text style={styles.tusPosts}>Your posts: </Text>
 
         {this.state.posts.length === 0 ? (
           <View>
-            <Text style={styles.nopost}>No has realizado ningún post. </Text>
+            <Text style={styles.nopost}>
+              You have not posted anything yet.{" "}
+            </Text>
           </View>
         ) : (
           <FlatList
             data={this.state.posts}
             keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => <Post data={item} navigation={this.props.navigation}/>}
+            renderItem={({ item }) => (
+              <Post data={item} navigation={this.props.navigation} />
+            )}
           />
         )}
       </View>
@@ -119,7 +132,8 @@ const styles = StyleSheet.create({
   log: {
     textAlign: 'center',
     fontFamily: 'sans-serif',
-    fontSize: 11,
+    fontSize: 16,
+    fontWeight: '500',
     color: 'white',
     width: 200,
     backgroundColor: 'rgb(129,99,106)',
@@ -129,6 +143,20 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     marginTop: 10,
     marginBottom: 15,
+  },
+  modify:{
+    textAlign: 'center',
+    fontFamily: 'sans-serif',
+    fontSize: 18,
+    fontWeight:'bold',
+    padding: 10,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  modbutton:{
+    margin: 10,
   },
   bio: {
     textAlign: 'center',
@@ -150,4 +178,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Profile;
+export default User;

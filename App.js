@@ -7,6 +7,7 @@ import Register from './src/screens/Register';
 import Menu from './src/components/Menu';
 import Comments from './src/screens/Comments';
 import UsersProfile from './src/screens/UsersProfile';
+import EditProfile from './src/screens/EditProfile';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,7 +26,7 @@ export default function App() {
         />
         <Stack.Screen
           name="Login"
-          component={(props) => <Login {...props} />}
+          component={Login}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -41,6 +42,11 @@ export default function App() {
         <Stack.Screen
           name="UsersProfile"
           component={UsersProfile}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfile}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

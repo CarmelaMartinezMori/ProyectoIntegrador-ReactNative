@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { auth, db, storage } from "../firebase/config";
 import * as ImagePicker from "expo-image-picker";
-import Loader from "./Loader"; // Importa el componente Loader
+import Loader from "./Loader"; 
 
 class RegisterForm extends Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class RegisterForm extends Component {
       bio: "",
       profileImage: "",
       error: "",
-      loading: false, // Nuevo estado para el loader
+      loading: false, 
     };
   }
 
@@ -43,7 +43,6 @@ class RegisterForm extends Component {
       return;
     }
 
-    // Establecer el estado de carga a true
     this.setState({ loading: true });
 
     auth
@@ -69,7 +68,7 @@ class RegisterForm extends Component {
                       this.props.navigation.navigate("Login");
                     })
                     .catch((error) => {
-                      this.setState({ error: error.message, loading: false }); // Restablecer el estado de carga en caso de error
+                      this.setState({ error: error.message, loading: false }); 
                     });
                 });
               });
@@ -78,13 +77,13 @@ class RegisterForm extends Component {
           .catch((err) => console.log(err));
       })
       .catch((error) => {
-        this.setState({ error: error.message, loading: false }); // Restablecer el estado de carga en caso de error
+        this.setState({ error: error.message, loading: false }); 
       });
   }
 
   activarPicker() {
     ImagePicker.launchImageLibraryAsync()
-      .then((imageData) => this.setState({ profileImage: imageData.uri }))
+      .then((imageData) => this.setState({ profileImage: imageData.assets[0].uri }))
       .catch((err) => console.log(err));
   }
 

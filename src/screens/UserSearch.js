@@ -52,7 +52,6 @@ class UserSearch extends Component {
           renderItem={({ item }) => (
             <TouchableOpacity
             onPress={() => {
-              console.log('Navigating to UsersProfile with email:', item.data.owner);
               this.props.navigation.navigate('UsersProfile', {
                 email: item.data.owner,
               });

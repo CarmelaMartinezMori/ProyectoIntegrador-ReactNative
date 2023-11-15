@@ -16,7 +16,6 @@ class UsersProfile extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
     db.collection('users')
       .where('owner', '==', this.state.props.route.params.email)
       .onSnapshot((docs) => {
@@ -26,7 +25,6 @@ class UsersProfile extends Component {
             id: doc.id,
             data: doc.data(),
           });
-          console.log(arrUser);
           this.setState({
             infoUser: arrUser[0],
           });
@@ -50,7 +48,6 @@ class UsersProfile extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <View style={styles.container}>
         {this.state.infoUser !== '' ? (
@@ -65,7 +62,7 @@ class UsersProfile extends Component {
           </Text>
         </TouchableOpacity>
             <Text style={styles.owner}>{this.state.infoUser.data.owner}</Text>
-            <Text style={styles.info}>{this.state.infoUser.data.bio}</Text>
+            <Text style={styles.info}>Bio: {this.state.infoUser.data.bio}</Text>
             <Posts
               data={this.state.posts}
               navigation={this.props.navigation}
@@ -79,18 +76,23 @@ class UsersProfile extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#DCDCDD',
+    backgroundColor: 'white',
   },
   owner: {
     padding: 10,
     margin: 10,
     fontWeight: 'bold',
     fontSize: 15,
-    backgroundColor: '#10254E',
+    backgroundColor: '#A3A0FD',
     borderRadius: 10,
     color: 'white',
     textAlign: 'center',
   },
+  info: {
+    marginBottom: 15,
+    marginTop: 15,
+    fontSize: 16,
+  }
 });
 
 export default UsersProfile;
