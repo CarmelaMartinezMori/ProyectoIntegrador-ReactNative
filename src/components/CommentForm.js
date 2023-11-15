@@ -24,7 +24,7 @@ class CommentForm extends Component {
         })
         .then(() => {
           this.setState({
-            comment: '', // Clear the field for a new comment.
+            comment: '', 
           });
         })
         .catch((error) => {
@@ -47,6 +47,7 @@ class CommentForm extends Component {
         <TouchableOpacity
           onPress={() => this.createComment(this.state.comment)}
           style={styles.sendButton}
+          disabled={!this.state.comment.trim()}
         >
           <Text style={styles.buttonText}>Send Comment</Text>
         </TouchableOpacity>
@@ -56,37 +57,36 @@ class CommentForm extends Component {
 }
 
 const styles = StyleSheet.create({
-  input: {
-    color: 'rgb(0,0,0)',
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderColor: 'rgb(0,0,0)',
-    backgroundColor: 'rgb(255,255,255)',
-    padding: 10,
-    margin: 10,
-  },
   container: {
     flex: 1,
     backgroundColor: 'white',
-    color: 'rgb(255,255,255)',
     padding: 15,
     justifyContent: 'center',
-    textAlign: 'center',
+    alignItems: 'center',
+  },
+  input: {
+    width: '100%',
+    color: 'black',
+    borderWidth: 1,
+    borderColor: '#9E68F0',
+    backgroundColor: 'white',
+    padding: 10,
+    marginTop: 10,
+    marginBottom: 20,
+    borderRadius: 8,
   },
   sendButton: {
-    borderStyle: 'solid',
+    width: '100%',
     borderWidth: 1,
-    backgroundColor: 'rgb(0,0,0)',
-    margin: 10,
+    backgroundColor: '#A3A0FD',
     padding: 10,
-    textAlign: 'center',
-    color: 'white',
     borderRadius: 8,
   },
   buttonText: {
     textAlign: 'center',
     fontWeight: 'bold',
+    color: 'white',
   },
 });
 
-export default CommentForm
+export default CommentForm;

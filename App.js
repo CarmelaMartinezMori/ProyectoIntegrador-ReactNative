@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -7,21 +7,12 @@ import Register from './src/screens/Register';
 import Menu from './src/components/Menu';
 import Comments from './src/screens/Comments';
 import UsersProfile from './src/screens/UsersProfile';
-import Loader from './src/components/Loader'; 
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [loading, setLoading] = useState(false); // Estado de carga
-
-  // Función para actualizar el estado de carga
-  const toggleLoading = (value) => {
-    setLoading(value);
-  };
-
   return (
     <NavigationContainer style={styles.container}>
-      {loading && <Loader />} {/* Muestra el Loader si el estado de carga es true */}
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
@@ -34,7 +25,7 @@ export default function App() {
         />
         <Stack.Screen
           name="Login"
-          component={(props) => <Login {...props} toggleLoading={toggleLoading} />}
+          component={(props) => <Login {...props} />}
           options={{ headerShown: false }}
         />
         <Stack.Screen

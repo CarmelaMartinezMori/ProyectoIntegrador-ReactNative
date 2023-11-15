@@ -130,6 +130,9 @@ export default class Post extends Component {
             )}
           />
         </View>
+        <Text style={styles.textDescription}>
+          {this.props.data.data.description}
+        </Text>
         {auth.currentUser.email === this.props.data.data.owner && (
           <TouchableOpacity onPress={() => this.confirmDeletePost()} style={styles.deletePost}>
             <Text style={styles.deletePostText}>
@@ -169,9 +172,6 @@ export default class Post extends Component {
             </View>
           </View>
         </Modal>
-        <Text style={styles.textDescription}>
-          {this.props.data.data.descripcion}
-        </Text>
       </View>
     );
   }
